@@ -510,7 +510,6 @@ void viewFavorites() {
         }  while(co != 0);
     }
     
-
     //START UP MENU
     void startUp() {
         int ch;
