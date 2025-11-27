@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 
@@ -15,17 +16,31 @@ int accountCount = 0;
 int currentUser = -1;
 bool loggedIn = false;
 
-//Favourites string
-string favoriteOrigin [10];
-string favoriteDestination [10];
-int favoriteCount = 0;
+//Favourites string (per-user, up to 10 favorites each)
+string favoriteOrigin [10][10];
+string favoriteDestination [10][10];
+int favoriteCount [10] = {0};
+
+// Clear Sceen Function
+void clearScreen() {
+    cout << "\033[2J\033[H";
+}
 
 //REGISTRATION MENU
 void registerUser() {
-    cout << "\n[[[[[[[= REGISTER =]]]]]]]\n";
+    
+    clearScreen();
+    cout << "\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄" << endl;
+    cout << "██                                                             ██" << endl;
+    cout << "██    █████▄  ██████  ▄████  ██ ▄█████ ██████ ██████ █████▄    ██" << endl;
+    cout << "██    ██▄▄██▄ ██▄▄   ██  ▄▄▄ ██ ▀▀▀▄▄▄   ██   ██▄▄   ██▄▄██    ██" << endl;
+    cout << "██    ██   ██ ██▄▄▄▄  ▀███▀  ██ █████▀   ██   ██▄▄▄▄ ██   ██   ██" << endl;
+    cout << "██                                                             ██" << endl;
+    cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀" << endl;
+    cout << "\n";
 
      if(accountCount >= 10) {
-        cout << "Sorry, maximum 10 accounts only!\n";
+        cout << "Sorry, Maximum of 10 Accounts Only!";
         cout << "\nPress Enter...";
         cin.ignore();
         cin.get();
@@ -63,7 +78,6 @@ void registerUser() {
         getline(cin, phoneInput);
         
         if(phoneInput.length() == 11) {
-            // Check if all characters are digits
             bool allDigits = true;
             for(int i = 0; i < 11; i++) {
                 if(phoneInput[i] < '0' || phoneInput[i] > '9') {
@@ -89,12 +103,39 @@ void registerUser() {
     getline(cin, password[accountCount]);
 
     //SELECTING PASSENGER TYPE
-    cout << "\n-----PASSENGER TYPE-----\n";
-    cout << "[1] Student\n";
-    cout << "[2] Senior Citizen\n";
-    cout << "[3] PWD\n";
-    cout << "[4] Regular\n";
-    cout << "Pick one: ";
+        clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                                                                                         ██\n";
+        cout << "██   ▄▄▄▄▄ ▄▄  ▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄ ▄▄▄▄    ▄▄▄▄   ▄▄▄   ▄▄▄▄  ▄▄▄▄ ▄▄▄▄▄ ▄▄  ▄▄  ▄▄▄▄ ▄▄▄▄▄ ▄▄▄▄    ▄▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄   ██\n";
+        cout << "██   ██▄▄  ███▄██   ██   ██▄▄  ██▄█▄   ██▄█▀ ██▀██ ███▄▄ ███▄▄ ██▄▄  ███▄██ ██ ▄▄ ██▄▄  ██▄█▄     ██   ▀███▀ ██▄█▀ ██▄▄    ██\n";
+        cout << "██   ██▄▄▄ ██ ▀██   ██   ██▄▄▄ ██ ██   ██    ██▀██ ▄▄██▀ ▄▄██▀ ██▄▄▄ ██ ▀██ ▀███▀ ██▄▄▄ ██ ██     ██     █   ██    ██▄▄▄   ██\n";
+        cout << "██                                                                                                                         ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
+        cout << "\n";
+        cout << "\n";
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄                                                            ▄▄▄▄▄▄▄▄▄▄▄▄▄                                 \n";
+        cout << "██        ██                                                            ██         ██        \n";  
+        cout << "██ ▄███   ██    ▄▄▄▄ ▄▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄  ▄▄ ▄▄▄▄▄▄             ██  ████▄  ██   █████▄ ██     ██ ████▄      \n";
+        cout << "██   ██   ██   ███▄▄   ██   ██ ██ ██▀██ ██▄▄  ███▄██   ██               ██   ▄▄██  ██   ██▄▄█▀ ██ ▄█▄ ██ ██  ██     \n";
+        cout << "██ ██████ ██   ▄▄██▀   ██   ▀███▀ ████▀ ██▄▄▄ ██ ▀██   ██               ██  ▄▄▄█▀  ██   ██      ▀██▀██▀  ████▀     \n";
+        cout << "██        ██                                                            ██         ██         \n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀                                                            ▀▀▀▀▀▀▀▀▀▀▀▀▀        \n";   
+        cout << "\n";
+        cout << "\n";  
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄    ▄▄▄▄ ▄▄▄▄▄ ▄▄  ▄▄ ▄▄  ▄▄▄  ▄▄▄▄                        ▄▄▄▄▄▄▄▄▄▄▄▄▄                                             \n";
+        cout << "██         ██   ███▄▄ ██▄▄  ███▄██ ██ ██▀██ ██▄█▄                       ██         ██                                               \n";  
+        cout << "██  ▄███▄  ██   ▄▄██▀ ██▄▄▄ ██ ▀██ ██ ▀███▀ ██ ██                       ██  ██  █  ██    ▄▄▄▄  ▄▄▄▄▄  ▄▄▄▄ ▄▄ ▄▄ ▄▄     ▄▄▄  ▄▄▄▄  \n";     
+        cout << "██   ▄██▀  ██   ██                                                      ██  ▀████  ██    ██▄█▄ ██▄▄  ██ ▄▄ ██ ██ ██    ██▀██ ██▄█▄\n";
+        cout << "██  ███▄▄  ██    ▄▄▄▄ ▄▄ ▄▄▄▄▄▄ ▄▄ ▄▄▄▄▄ ▄▄▄▄▄ ▄▄  ▄▄                   ██     ██  ██    ██ ██ ██▄▄▄ ▀███▀ ▀███▀ ██▄▄▄ ██▀██ ██ ██               \n";
+        cout << "██         ██   ██▀▀▀ ██   ██   ██   ▄█▀ ██▄▄  ███▄██                   ██         ██                                                          \n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀   ▀████ ██   ██   ██ ▄██▄▄ ██▄▄▄ ██ ▀██                   ▀▀▀▀▀▀▀▀▀▀▀▀▀                                                            \n";  
+        cout << "\n";
+        cout << "\n";  
+           
+                                                                                          
+       cout << "Pick one: ";
+
     int type;
     cin >> type;
 
@@ -113,18 +154,32 @@ void registerUser() {
 
     accountCount++;
 
-    cout << "\nAccount Created!\n";
+    cout << "\n";
+    cout << "▄▄                                                                                                            ▄▄\n";
+    cout << "██   ▄████▄ ▄█████ ▄█████ ▄████▄ ██  ██ ███  ██ ██████   ▄█████ █████▄  ██████ ▄████▄ ██████ ██████ ████▄     ██\n";
+    cout << "██   ██▄▄██ ██     ██     ██  ██ ██  ██ ██ ▀▄██   ██     ██     ██▄▄██▄ ██▄▄   ██▄▄██   ██   ██▄▄   ██  ██    ██\n";
+    cout << "▄▄   ██  ██ ▀█████ ▀█████ ▀████▀ ▀████▀ ██   ██   ██     ▀█████ ██   ██ ██▄▄▄▄ ██  ██   ██   ██▄▄▄▄ ████▀     ▄▄\n";
+    cout << "\n";
     cout << "You are account #" << accountCount << "\n";
-    cout << "\nPress Enter to continue....";
+    cout << "Press Enter to Continue...";
+ 
     cin.ignore();
     cin.get();
 }
 
 //LOGIN MENU
 void loginUser() {
+    
     string inputUser, inputPass;
-
-    cout << "\n[[[[[= LOGIN =]]]]]\n";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                               ██\n";
+        cout << "██  ▄▄     ▄▄▄   ▄▄▄▄ ▄▄ ▄▄  ▄▄  ██\n";
+        cout << "██  ██    ██▀██ ██ ▄▄ ██ ███▄██  ██\n";
+        cout << "██  ██▄▄▄ ▀███▀ ▀███▀ ██ ██ ▀██  ██\n";
+        cout << "██                               ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
 
     if(accountCount == 0) {
         cout << "No accounts yet! Register first.\n";
@@ -160,7 +215,15 @@ void loginUser() {
 
 // VIEW PROFILE MENU
 void viewProfile() {
-    cout << "\n[[[[[= MY PROFILE =]]]]]\n";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                          ██\n";
+        cout << "██  ▄▄   ▄▄ ▄▄ ▄▄   ▄▄▄▄  ▄▄▄▄   ▄▄▄  ▄▄▄▄▄ ▄▄ ▄▄    ▄▄▄▄▄  ██\n";
+        cout << "██  ██▀▄▀██ ▀███▀   ██▄█▀ ██▄█▄ ██▀██ ██▄▄  ██ ██    ██▄▄   ██\n";
+        cout << "██  ██   ██   █     ██    ██ ██ ▀███▀ ██    ██ ██▄▄▄ ██▄▄▄  ██\n";
+        cout << "██                                                          ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
     cout << "Name: " << name [currentUser] << endl;
     cout << "Phone: " << phone [currentUser] << endl;
     cout << "Username: " << username [currentUser] << endl;
@@ -173,23 +236,70 @@ void viewProfile() {
 
 // UPDATE PROFILE MENU
 void updateProfile() {
-    cout << "\n[[[[[= UPDATE PROFILE =]]]]]\n";
-    cout << "[1] Change Name\n";
-    cout << "[2] Change Phone\n";
-    cout << "Pick: ";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                                               ██\n";
+        cout << "██  ▄▄ ▄▄ ▄▄▄▄  ▄▄▄▄   ▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄  ▄▄▄▄  ▄▄▄▄   ▄▄▄  ▄▄▄▄▄ ▄▄ ▄▄    ▄▄▄▄▄  ██\n";
+        cout << "██  ██ ██ ██▄█▀ ██▀██ ██▀██  ██   ██▄▄   ██▄█▀ ██▄█▄ ██▀██ ██▄▄  ██ ██    ██▄▄   ██\n";
+        cout << "██  ▀███▀ ██    ████▀ ██▀██  ██   ██▄▄▄  ██    ██ ██ ▀███▀ ██    ██ ██▄▄▄ ██▄▄▄  ██\n";
+        cout << "██                                                                               ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄                                                                                                                                                       \n";
+        cout << "██        ██      ██████ ██  ██ ▄████▄ ███  ██  ▄████  ██▀▀▀▀       \n";  
+        cout << "██ ▄███   ██      ██     ██████ ██▄▄██ ██ ▀▄██ ██  ▄▄▄ ██▀▀         \n";
+        cout << "██   ██   ██      ▀▀▀▀▀▀ ▀▀  ▀▀ ▀▀  ▀▀ ▀▀   ▀▀  ▀▀▀▀▀  ▀▀▀▀▀▀       \n";
+        cout << "██ ██████ ██      ███  ██ ▄████▄ ██▄  ▄██ ██▀▀▀▀                    \n";
+        cout << "██        ██      ██ ▀▄██ ██▄▄██ ██ ▀▀ ██ ██▀▀▀▀                    \n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀      ▀▀  ▀▀▀ ▀▀  ▀▀ ▀▀    ▀▀ ▀▀▀▀▀▀                    \n";   
+        cout << "\n";
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄                                                                                                                                                       \n";
+        cout << "██        ██      ██████ ██  ██ ▄████▄ ███  ██  ▄████  ██▀▀▀▀       \n";  
+        cout << "██ ▄███▄  ██      ██     ██████ ██▄▄██ ██ ▀▄██ ██  ▄▄▄ ██▀▀         \n";
+        cout << "██  ▄██▀  ██      ▀▀▀▀▀▀ ▀▀  ▀▀ ▀▀  ▀▀ ▀▀   ▀▀  ▀▀▀▀▀  ▀▀▀▀▀▀       \n";
+        cout << "██ ███▄▄  ██      █████▄ ██  ██ ▄████▄ ███  ██ ██▀▀▀▀                     \n";
+        cout << "██        ██      ██▄▄█▀ ██████ ██  ██ ██ ▀▄██ ██▀▀▀▀                       \n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀      ▀▀     ▀▀  ▀▀  ▀▀▀▀  ▀▀   ▀▀ ▀▀▀▀▀▀       \n";   
+        cout << "\n";
+        cout << "Pick: ";
     int pick;
     cin >> pick;
     
     if(pick == 1) {
+        cout << "\n";
         cout << "New name: ";
         cin.ignore();
         getline(cin, name[currentUser]);
         cout << "Name updated!\n";
     } else if(pick == 2) {
-        cout << "New phone: ";
+        string phoneInput;
+        bool validPhone = false;
+        
         cin.ignore();
-        getline(cin, phone[currentUser]);
-        cout << "Phone updated!\n";
+        while(!validPhone) {
+            cout << "New phone (11 digits): ";
+            getline(cin, phoneInput);
+            
+            if(phoneInput.length() == 11) {
+                bool allDigits = true;
+                for(int i = 0; i < 11; i++) {
+                    if(phoneInput[i] < '0' || phoneInput[i] > '9') {
+                        allDigits = false;
+                        break;
+                    }
+                }
+                
+                if(allDigits) {
+                    phone[currentUser] = phoneInput;
+                    validPhone = true;
+                    cout << "Phone updated!\n";
+                } else {
+                    cout << "Error: Phone number must contain only numbers!\n";
+                }
+            } else {
+                cout << "Error: Phone number must be exactly 11 digits!\n";
+            }
+        }
     }
     
     cout << "\nPress Enter to continue....";
@@ -199,28 +309,52 @@ void updateProfile() {
 
 //DELETE ACCOUNT MENU
 void deleteAccount() {
-    cout << "\n[[[[[= DELETE ACCOUNT =]]]]]\n";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                                                      ██\n";
+        cout << "██  ▄▄▄▄  ▄▄▄▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄    ▄▄▄   ▄▄▄▄  ▄▄▄▄  ▄▄▄  ▄▄ ▄▄ ▄▄  ▄▄ ▄▄▄▄▄▄  ██\n";
+        cout << "██  ██▀██ ██▄▄  ██    ██▄▄    ██   ██▄▄    ██▀██ ██▀▀▀ ██▀▀▀ ██▀██ ██ ██ ███▄██   ██    ██\n";
+        cout << "██  ████▀ ██▄▄▄ ██▄▄▄ ██▄▄▄   ██   ██▄▄▄   ██▀██ ▀████ ▀████ ▀███▀ ▀███▀ ██ ▀██   ██    ██\n";
+        cout << "██                                                                                      ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
     cout << "Are you sure? (Y/N): ";
     char ans;
     cin >> ans;
     
     if(ans == 'Y' || ans == 'y') {
-        // Shift all accounts after deleted one
         for(int i = currentUser; i < accountCount - 1; i++) {
             name[i] = name[i + 1];
             phone[i] = phone[i + 1];
             username[i] = username[i + 1];
             password[i] = password[i + 1];
             passengertype[i] = passengertype[i + 1];
+            favoriteCount[i] = favoriteCount[i + 1];
+            for (int j = 0; j < favoriteCount[i]; j++) {
+                favoriteOrigin[i][j] = favoriteOrigin[i + 1][j];
+                favoriteDestination[i][j] = favoriteDestination[i + 1][j];
+            }
+        }
+        
+        if (accountCount - 1 >= 0) {
+            favoriteCount[accountCount - 1] = 0;
         }
         
         accountCount--;
         loggedIn = false;
         currentUser = -1;
         
-        cout << "Account deleted.\n";
+        cout << " ▄▄                                                                                                           ▄▄\n";
+        cout << " ██   ▄████▄ ▄█████ ▄█████ ▄████▄ ██  ██ ███  ██ ██████   ████▄  ██████ ██     ██████ ██████ ██████ ████▄     ██\n";
+        cout << " ██   ██▄▄██ ██     ██     ██  ██ ██  ██ ██ ▀▄██   ██     ██  ██ ██▄▄   ██     ██▄▄     ██   ██▄▄   ██  ██    ██\n";
+        cout << " ▄▄   ██  ██ ▀█████ ▀█████ ▀████▀ ▀████▀ ██   ██   ██     ████▀  ██▄▄▄▄ ██████ ██▄▄▄▄   ██   ██▄▄▄▄ ████▀     ▄▄\n";
+        cout << "\n";
     } else {
-        cout << "Cancelled.\n";
+        cout << "▄▄                                                             ▄▄\n";
+        cout << "██    ▄▄▄▄  ▄▄▄  ▄▄  ▄▄  ▄▄▄▄ ▄▄▄▄▄ ▄▄    ▄▄    ▄▄▄▄▄ ▄▄▄▄     ██\n";
+        cout << "██   ██▀▀▀ ██▀██ ███▄██ ██▀▀▀ ██▄▄  ██    ██    ██▄▄  ██▀██    ██\n";
+        cout << "▄▄   ▀████ ██▀██ ██ ▀██ ▀████ ██▄▄▄ ██▄▄▄ ██▄▄▄ ██▄▄▄ ████▀    ▄▄\n";
+        cout << "\n";
     }
     
     cout << "\nPress Enter...";
@@ -230,15 +364,27 @@ void deleteAccount() {
 
 //SEARCH ROUTE MENU
 void searchRoute() {
+    clearScreen();
     string from, to;
 
-    cout << "\n[[[[[= SEARCH ROUTE =]]]]]\n";
+    cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+    cout << "██                                                                                    ██\n";
+    cout << "██  ▄█████ ██████ ▄████▄ █████▄  ▄█████ ██  ██   █████▄  ▄████▄ ██  ██ ██████ ██████  ██\n";
+    cout << "██  ▀▀▀▄▄▄ ██▄▄   ██▄▄██ ██▄▄██▄ ██     ██████   ██▄▄██▄ ██  ██ ██  ██   ██   ██▄▄    ██\n";
+    cout << "██  █████▀ ██▄▄▄▄ ██  ██ ██   ██ ▀█████ ██  ██   ██   ██ ▀████▀ ▀████▀   ██   ██▄▄▄▄  ██\n";
+    cout << "██                                                                                    ██\n";
+    cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+    cout << "\n";
     cout << "Available Locations:\n"; 
-    cout << "- CPU, Jaro Plaza, Robinsons Jaro, WVSU\n";
-    cout << "- La Paz Market, La Paz Plaza, Lapuz\n";
-    cout << "- Molo Plaza, Esplanade, SM City\n";
-    cout << "- City Hall, Plaza Libertad, Robinson's Place\n";
-    cout << "- Pavia Plaza, Villa Baybay\n\n";
+    cout << "- CPU, Jaro Plaza, Robinsons Jaro, WVSU, Luna St., Provincial Capitol\n";
+    cout << "- St Paul Hospital, University of San Augustin, John B Lacson Molo, Molo Plaza\n";
+    cout << "- La Paz Market, La Paz Plaza, Lapuz, Jalandoni, Calle Real\n";
+    cout << "- Sunburst Park, Iloilo City Hall, Freedome Grandstand\n";
+    cout << "- Esplanade 1, Ateneo de Iloilo, Atria Park, Iloilo Convention Center\n";
+    cout << "- Mega World, SM City, Gaisano City, Smallville, Esplanade 4\n";
+    cout << "- Plaza Libertad, University of Iloilo, Robinson's Place Main, SM Delgado\n";
+    cout << "- Avancena St., Villa Plaza, Villa Baybay\n";
+    cout << "- Plazoleta Gay, Infante Street, Diversion Road, Robinson's Place Pavia, Pavia Plaza\n\n";
 
     cout << "From: ";
     cin.ignore();
@@ -256,21 +402,21 @@ void searchRoute() {
     string travelTime = "";
 
     // ROUTE 1 (BUS 101)
-    if ((from == "CPU" || from == "Jaro Plaza" || from == "Robinson's Jaro" || 
-        from == "WVSU" || from == "Luna St." || from == "Iloilo Provincial Capitol" || 
-        from == "St. Paul's Hospital" || from == "University of San Augustine" || 
-        from == "John B. Lacson" || from == "Molo Plaza") && 
-        (to == "CPU" || to == "Jaro Plaza" || to == "Robinson's Jaro" || 
-        to == "WVSU" || to == "Luna St." || to == "Iloilo Provincial Capitol" || 
-        to == "St. Paul's Hospital" || to == "University of San Augustine" || 
-        to == "John B. Lacson" || to == "Molo Plaza"))
+    if ((from == "CPU" || from == "Jaro Plaza" || from == "Robinsons Jaro" || 
+        from == "WVSU" || from == "Luna St." || from == "Provincial Capitol" || 
+        from == "St Paul Hospital" || from == "University of San Augustin" || 
+        from == "John B Lacson Molo" || from == "Molo Plaza") && 
+        (to == "CPU" || to == "Jaro Plaza" || to == "Robinsons Jaro" || 
+        to == "WVSU" || to == "Luna St." || to == "Provincial Capitol" || 
+        to == "St Paul Hospital" || to == "University of San Augustin" || 
+        to == "John B Lacson Molo" || to == "Molo Plaza")) {
         
         busName = "Bus 101";
         stops[0] = "CPU";
         stops[1] = "Jaro Plaza";
         stops[2] = "Robinsons Jaro";
         stops[3] = "WVSU";
-        stops[4] = "Luna St";
+        stops[4] = "Luna St.";
         stops[5] = "Provincial Capitol";
         stops[6] = "St Paul Hospital";
         stops[7] = "University of San Augustin";
@@ -278,19 +424,157 @@ void searchRoute() {
         stops[9] = "Molo Plaza";
         stopCount = 10;
         travelTime = "30 minutes";
-        
 
+        startIndex = -1; endIndex = -1;
         for(int i = 0; i < stopCount; i++) {
             if(stops[i] == from) startIndex = i;
             if(stops[i] == to) endIndex = i;
-            }
+        }
+        
+        if(startIndex != -1 && endIndex != -1 && startIndex != endIndex) {
+            found = true;
+        }
+    }
+
+    // ROUTE 2: (BUS 102)
+    if ((from == "La Paz Market" || from == "La Paz Plaza" || from == "Lapuz" || 
+        from == "Jalandoni" || from == "Provincial Capitol" || from == "Calle Real" || 
+        from == "Sunburst Park" || from == "Iloilo City Hall" || from == "Freedome Grandstand") 
+        && 
+        (to == "La Paz Market" || to == "La Paz Plaza" || to == "Lapuz" || 
+        to == "Jalandoni" || to == "Provincial Capitol" || to == "Calle Real" || 
+        to == "Sunburst Park" || to == "Iloilo City Hall" || to == "Freedome Grandstand")) {
+        
+        busName = "Bus 102";
+        stops[0] = "La Paz Market";
+        stops[1] = "La Paz Plaza";
+        stops[2] = "Lapuz";
+        stops[3] = "Jalandoni";
+        stops[4] = "Provincial Capitol";
+        stops[5] = "Calle Real";
+        stops[6] = "Sunburst Park";
+        stops[7] = "Iloilo City Hall";
+        stops[8] = "Freedome Grandstand";
+        stopCount = 9;
+        travelTime = "30 minutes";
+        
+        startIndex = -1; endIndex = -1;
+        for(int i = 0; i < stopCount; i++) {
+            if(stops[i] == from) startIndex = i;
+            if(stops[i] == to) endIndex = i;
+        }
         
         if(startIndex != -1 && endIndex != -1 && startIndex != endIndex) {
             found = true;
         }   
+    }
 
-        if(found == true) {
-        cout << "\n[[[[[= ROUTE FOUND! =]]]]\n";
+    // ROUTE 3: (BUS 103)
+    if ((from == "Molo Plaza" || from == "Esplanade 1" || from == "Ateneo de Iloilo" ||
+        from == "Atria Park" || from == "Iloilo Convention Center" || from == "Mega World" ||
+        from == "SM City" || from == "Gaisano City" || from == "Smallville" || from == "Esplanade 4")
+        &&
+        (to == "Molo Plaza" || to == "Esplanade 1" || to == "Ateneo de Iloilo" ||
+        to == "Atria Park" || to == "Iloilo Convention Center" || to == "Mega World" ||
+        to == "SM City" || to == "Gaisano City" || to == "Smallville" || to == "Esplanade 4")) {
+        
+        busName = "Bus 103";
+        stops[0] = "Molo Plaza";
+        stops[1] = "Esplanade 1";
+        stops[2] = "Ateneo de Iloilo";
+        stops[3] = "Atria Park";
+        stops[4] = "Iloilo Convention Center";
+        stops[5] = "Mega World";
+        stops[6] = "SM City";
+        stops[7] = "Gaisano City";
+        stops[8] = "Smallville";
+        stops[9] = "Esplanade 4";
+        stopCount = 10;
+        travelTime = "30 minutes";
+
+        startIndex = -1; endIndex = -1;
+        for(int i = 0; i < stopCount; i++) {
+            if(stops[i] == from) startIndex = i;
+            if(stops[i] == to) endIndex = i;
+        }
+        
+        if(startIndex != -1 && endIndex != -1 && startIndex != endIndex) {
+            found = true;
+        }   
+    }
+            
+    // ROUTE 4: (BUS 104)
+    if ((from == "Plaza Libertad" || from == "University of Iloilo" || from == "Robinson's Place Main" ||
+        from == "SM Delgado" || from == "University of San Augustin" || from == "John B Lacson Molo" ||
+        from == "Molo Plaza" || from == "Avancena St." || from == "Villa Plaza" || from == "Villa Baybay")
+        &&
+        (to == "Plaza Libertad" || to == "University of Iloilo" || to == "Robinson's Place Main" ||
+        to == "SM Delgado" || to == "University of San Augustin" || to == "John B Lacson Molo" ||
+        to == "Molo Plaza" || to == "Avancena St." || to == "Villa Plaza" || to == "Villa Baybay")) {
+        
+        busName = "Bus 104";
+        stops[0] = "Plaza Libertad";
+        stops[1] = "University of Iloilo";
+        stops[2] = "Robinson's Place Main";
+        stops[3] = "SM Delgado";
+        stops[4] = "University of San Augustin";
+        stops[5] = "John B Lacson Molo";
+        stops[6] = "Molo Plaza";
+        stops[7] = "Avancena St.";
+        stops[8] = "Villa Plaza";
+        stops[9] = "Villa Baybay";
+        stopCount = 10;
+        travelTime = "30 minutes";
+
+        startIndex = -1; endIndex = -1;
+        for(int i = 0; i < stopCount; i++) {
+            if(stops[i] == from) startIndex = i;
+            if(stops[i] == to) endIndex = i;
+        }
+        
+        if(startIndex != -1 && endIndex != -1 && startIndex != endIndex) {
+            found = true;
+        }   
+    }
+
+    // ROUTE 5: (BUS 105)
+    if((from == "Iloilo City Hall" || from == "Plazoleta Gay" || from == "Robinson's Place Main" || 
+        from == "Infante Street" || from == "Diversion Road" || from == "SM City Iloilo" || 
+        from == "Jaro Plaza" || from == "Robinson's Place Pavia" || from == "Pavia Plaza") &&
+       (to == "Iloilo City Hall" || to == "Plazoleta Gay" || to == "Robinson's Place Main" || 
+        to == "Infante Street" || to == "Diversion Road" || to == "SM City Iloilo" || 
+        to == "Jaro Plaza" || to == "Robinson's Place Pavia" || to == "Pavia Plaza")) {
+        
+        busName = "Bus 105";
+        stops[0] = "Iloilo City Hall";
+        stops[1] = "Plazoleta Gay";
+        stops[2] = "Robinson's Place Main";
+        stops[3] = "Infante Street";
+        stops[4] = "Diversion Road";
+        stops[5] = "SM City Iloilo";
+        stops[6] = "Jaro Plaza";
+        stops[7] = "Robinson's Place Pavia";
+        stops[8] = "Pavia Plaza";
+        stopCount = 9;
+        travelTime = "50 minutes";
+        
+        startIndex = -1; endIndex = -1;
+        for(int i = 0; i < stopCount; i++) {
+            if(stops[i] == from) startIndex = i;
+            if(stops[i] == to) endIndex = i;
+        }
+        
+        if(startIndex != -1 && endIndex != -1 && startIndex != endIndex) {
+            found = true;
+        }
+    }
+
+    if(found == true) {
+        cout << "\n";
+        cout << "   ██   ▄▄▄▄   ▄▄▄  ▄▄ ▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄   ▄▄▄▄▄  ▄▄▄  ▄▄ ▄▄ ▄▄  ▄▄ ▄▄▄▄     ██\n";
+        cout << "   ██   ██▄█▄ ██▀██ ██ ██   ██   ██▄▄    ██▄▄  ██▀██ ██ ██ ███▄██ ██▀██    ██\n";
+        cout << "   ▄▄   ██ ██ ▀███▀ ▀███▀   ██   ██▄▄▄   ██    ▀███▀ ▀███▀ ██ ▀██ ████▀    ▄▄\n";
+        cout << "\n";
         cout << "Bus: " << busName << endl;
         cout << "From: " << from << endl;
         cout << "To: " << to << endl;
@@ -327,7 +611,6 @@ void searchRoute() {
         cout << "Fare: P" << fare << endl;
         cout << "Travel Time: " << travelTime << endl;
         
-        // Show route path
         cout << "\nRoute: ";
         if(startIndex < endIndex) {
             for(int i = startIndex; i <= endIndex; i++) {
@@ -347,23 +630,35 @@ void searchRoute() {
         cin >> save;
         
         if(save == 'Y' || save == 'y') {
-            if(favoriteCount < 10) {
-                favoriteOrigin[favoriteCount] = from;
-                favoriteDestination[favoriteCount] = to;
-                favoriteCount = favoriteCount + 1;
+            if(currentUser >= 0 && favoriteCount[currentUser] < 10) {
+                favoriteOrigin[currentUser][favoriteCount[currentUser]] = from;
+                favoriteDestination[currentUser][favoriteCount[currentUser]] = to;
+                favoriteCount[currentUser] = favoriteCount[currentUser] + 1;
                 cout << "Saved!\n";
             } else {
-                cout << "Favorites full!\n";
+                cout << "Favorites full or user not logged in!\n";
             }
         }
     } else {
         cout << "\nNo route found. Check spelling or try different locations.\n";
     }
+    
+    cout << "\nPress Enter...";
+    cin.ignore();
+    cin.get();
 }
 
 // VIEW ALL ROUTE MENU
 void viewAll() { 
-    cout << "\n===== ALL ROUTES =====\n\n";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                            ██\n";
+        cout << "██   ▄▄▄  ▄▄    ▄▄      ▄▄▄▄   ▄▄▄  ▄▄ ▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄  ▄▄▄▄  ██\n";
+        cout << "██  ██▀██ ██    ██      ██▄█▄ ██▀██ ██ ██   ██   ██▄▄  ███▄▄  ██\n";
+        cout << "██  ██▀██ ██▄▄▄ ██▄▄▄   ██ ██ ▀███▀ ▀███▀   ██   ██▄▄▄ ▄▄██▀  ██\n";
+        cout << "██                                                            ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
 
     cout << "Route 1: Jaro - Molo via CPU (Bus 101)\n";
     cout << "Stops: CPU -> Jaro Plaza -> Robinsons Jaro -> WVSU\n";
@@ -390,7 +685,7 @@ void viewAll() {
     cout << "Stops: Plaza Libertad -> University of Iloilo\n";
     cout << "       -> Robinson's Place Main -> SM Delgado\n";
     cout << "       -> University of San Augustine\n";
-    cout << "       -> John B Lacson Molo -> Plaza Molo\n";
+    cout << "       -> John B Lacson Molo -> Molo Plaza\n";
     cout << "       -> Avancena St -> Plaza Villa -> Villa Baybay\n";
     cout << "Travel Time: 45 minutes\n\n";
     
@@ -414,14 +709,22 @@ void viewAll() {
 
 // VIEW FAVORITES MENU 
 void viewFavorites() {
-    cout << "\n[[[[[= MY FAVORITES =]]]]]\n";
+    clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                                                        ██\n";
+        cout << "██  ▄▄▄▄▄  ▄▄▄  ▄▄ ▄▄  ▄▄▄  ▄▄▄▄  ▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄   ▄▄▄▄   ▄▄▄  ▄▄ ▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄  ▄▄▄▄  ██\n";
+        cout << "██  ██▄▄  ██▀██ ██▄██ ██▀██ ██▄█▄ ██   ██   ██▄▄    ██▄█▄ ██▀██ ██ ██   ██   ██▄▄  ███▄▄  ██\n";
+        cout << "██  ██    ██▀██  ▀█▀  ▀███▀ ██ ██ ██   ██   ██▄▄▄   ██ ██ ▀███▀ ▀███▀   ██   ██▄▄▄ ▄▄██▀  ██\n";
+        cout << "██                                                                                        ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
     
-    if(favoriteCount == 0) {
+    if(currentUser < 0 || favoriteCount[currentUser] == 0) {
         cout << "No favorites yet.\n";
     } else {
         int i = 0;
-        while(i < favoriteCount) {
-            cout << i + 1 << ". " << favoriteOrigin[i] << " to " << favoriteDestination[i] << endl;
+        while(i < favoriteCount[currentUser]) {
+            cout << i + 1 << ". " << favoriteOrigin[currentUser][i] << " to " << favoriteDestination[currentUser][i] << endl;
             i++;
         }
         
@@ -434,13 +737,12 @@ void viewFavorites() {
             int num;
             cin >> num;
             
-            if(num > 0 && num <= favoriteCount) {
-                // Shift array
-                for(int j = num - 1; j < favoriteCount - 1; j++) {
-                    favoriteOrigin[j] = favoriteOrigin[j + 1];
-                    favoriteDestination[j] = favoriteDestination[j + 1];
+            if(num > 0 && num <= favoriteCount[currentUser]) {
+                for(int j = num - 1; j < favoriteCount[currentUser] - 1; j++) {
+                    favoriteOrigin[currentUser][j] = favoriteOrigin[currentUser][j + 1];
+                    favoriteDestination[currentUser][j] = favoriteDestination[currentUser][j + 1];
                 }
-                favoriteCount--;
+                favoriteCount[currentUser]--;
                 cout << "Deleted!\n";
             }
         }
@@ -453,10 +755,19 @@ void viewFavorites() {
 
  // MAIN MENU
     void mainMenu() {
+        
         int co;
 
-        do {      
-        cout << "\n[[[[[= MAIN MENU =]]]]]\n";
+        do {   
+        clearScreen();   
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                                                        ██\n";
+        cout << "██  ▄▄   ▄▄  ▄▄▄  ▄▄ ▄▄  ▄▄   ▄▄   ▄▄ ▄▄▄▄▄ ▄▄  ▄▄ ▄▄ ▄▄  ██\n";
+        cout << "██  ██▀▄▀██ ██▀██ ██ ███▄██   ██▀▄▀██ ██▄▄  ███▄██ ██ ██  ██\n";
+        cout << "██  ██   ██ ██▀██ ██ ██ ▀██   ██   ██ ██▄▄▄ ██ ▀██ ▀███▀  ██\n";
+        cout << "██                                                        ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
         cout << "[1] Search Routes\n";
         cout << "[2] View All Routes\n";
         cout << "[3] Favorite Routes\n";
@@ -464,6 +775,8 @@ void viewFavorites() {
         cout << "[5] Update Porifle\n";
         cout << "[6] Delete Profile\n";
         cout << "[7] Logout\n";
+        cout << "[0] Exit\n";
+        cout << "Enter a Number: ";
         cin >> co;
        
     
@@ -486,20 +799,18 @@ void viewFavorites() {
             case 6:
                 deleteAccount();
                 if(!loggedIn) {
-                break; //This is to exit after the account deletion
+                return;
             }
                 break;
             case 7: 
                 //This log's the user out
                 loggedIn = false;
                 currentUser = -1;
-                // This clears favorites when logging out
-                favoriteCount = 0;
                 cout << "\nLogged out.\n";
                 cout << "\nPress Enter...";
                 cin.ignore();
                 cin.get();
-                break;
+                return;
             case 0: 
                 cout << "\nThank you!\n";
                 break;
@@ -512,10 +823,19 @@ void viewFavorites() {
     
     //START UP MENU
     void startUp() {
+        
         int ch;
 
         do {
-        cout << "\n[[[[[= START UP MENU =]]]]]\n";
+        clearScreen();
+        cout << "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n";
+        cout << "██                              ██\n";
+        cout << "██   █████▄ █████▄  ██ ▄█████   ██\n";
+        cout << "██   ██▄▄██ ██▄▄█▄  ██ ▀▀▀▄▄▄   ██\n";
+        cout << "██   ██▄▄█▀ ██  ▀██ ██ █████▀   ██\n";
+        cout << "██                              ██\n";
+        cout << "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n";
+        cout << "\n";
         cout << "Total Accounts: " << accountCount << "/10\n\n";
 
         cout << "[1] Login\n";
@@ -532,16 +852,16 @@ void viewFavorites() {
                 mainMenu();
             }
             break;
-        case 2:
+         case 2:
             registerUser();
             break;
         case 0: 
-         cout << "\nBye!\n";
-
+            cout << "\nBye!\n";
+            break;
         default:
             cout << "\nInvalid!\n";
         }
-        } while(ch != 0);
+      } while(ch != 0);
     }
 
 
