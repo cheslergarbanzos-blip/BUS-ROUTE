@@ -10,7 +10,8 @@
         "xmemory": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "string": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
