@@ -1,4 +1,4 @@
-1
+3
 Chesler F. Garbanzos
 09690950681
 CHESLER
@@ -9,3 +9,15 @@ WVSU
 Molo Plaza
 Molo Plaza
 Villa Plaza
+MAX
+11111111111
+MAXS
+1
+Student
+0
+JOE
+12345678901
+MAMA
+URMOM
+Student
+0
