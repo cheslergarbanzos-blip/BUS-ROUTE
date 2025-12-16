@@ -298,7 +298,7 @@ void viewProfile() {
 
 // UPDATE PROFILE MENU
 void updateProfile() {
-        clearScreen()
+        clearScreen();
 
         cout << "                                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄    \n";
         cout << "                                        ██                                                                               ██\n";
